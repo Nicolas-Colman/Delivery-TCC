@@ -13,17 +13,7 @@ import "firebase/compat/storage";
 // Your web app's Firebase configuration
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDFwaErfSj8tP4bYY3Ya1YBkWV1m6F2d0w",
-
-  authDomain: "delivery-de-servico.firebaseapp.com",
-
-  projectId: "delivery-de-servico",
-
-  storageBucket: "delivery-de-servico.firebasestorage.app",
-
-  messagingSenderId: "623111370085",
-
-  appId: "1:623111370085:web:0c106b92435c3a27fa1d8c"
+  
   
 };
 
