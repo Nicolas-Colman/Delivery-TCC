@@ -5,12 +5,16 @@ export default StyleSheet.create({
     tela:{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+
+    },
+    telaH:{
+        flex: 1,
+        alignItems: 'center',
 
     },
 
     inputArea:{
-        width: '80%'
+        width: '80%',
     },
 
     buttonArea:{
@@ -26,7 +30,7 @@ export default StyleSheet.create({
     },
 
     botao:{
-        backgroundColor: '#0782f9',
+        backgroundColor: '#9ac5d8',
         width: '100%',
         padding: 10,
         borderRadius: 10,
@@ -49,12 +53,12 @@ export default StyleSheet.create({
         alignItems: "center",
         color: 'white',
         marginTop: 10,
-        borderColor: '#0782f9',
+        borderColor: '#9ac5d8',
         borderWidth: 2
     },
 
     botaoBrancoTexto:{
-        color: '#0782f9',
+        color: '#9ac5d8',
         fontWeight: '700'
     },
 
@@ -84,6 +88,51 @@ export default StyleSheet.create({
 
     tabNav:{
         backgroundColor: 'black'
+    },
+
+    cabecalhoH:{
+        width: '100%',
+        height: '15%',
+        marginTop: 25,
+        borderColor: 'grey',
+        
+    },
+
+    buscarH:{
+        flexDirection: 'row',
+        borderWidth: 1,
+        width: '50%',
+        borderRadius: 20,
+        borderColor: 'grey',
+        margin: 'auto',
+        height: 35,
+
+    },
+
+    buscarH2:{
+        flexDirection: 'row',
+        borderWidth: 1,
+        width: '50%',
+        borderRadius: 5,
+        borderColor: 'grey',
+        margin: 'auto',
+        height: 35,
+
+    },
+    logoAbertura:{
+
+        width: 300,
+        height: 300,
+        margin: 'auto'
+         
+        
+    },
+
+    logo:{
+        width: 200,
+        height: 200,
+        marginTop: 50,
+        marginBottom: 50
     }
 
 });

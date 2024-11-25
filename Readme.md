@@ -1,0 +1,1 @@
+projeto usando React-Native e TypeScript para tcc
