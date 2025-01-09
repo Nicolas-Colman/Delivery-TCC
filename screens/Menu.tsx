@@ -61,7 +61,7 @@ export default function Menu() {
 
             <Tab.Screen 
                 name="Publicar" 
-                component={Servicos}
+                component={Publicar}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
@@ -76,7 +76,7 @@ export default function Menu() {
 
             <Tab.Screen 
                 name="Serviços" 
-                component={Publicar}
+                component={Servicos}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
@@ -96,7 +96,7 @@ export default function Menu() {
                     headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
                         <Icon 
-                            name="list-outline" 
+                            name="settings-outline" 
                             size={30} 
                             color={focused ? '#9ac5d8' : 'gray'} 
                         />

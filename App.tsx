@@ -7,6 +7,7 @@ import Login from './screens/Login';
 import Registra from './screens/Registra';
 import Menu from './screens/Menu';
 import Logo from './screens/LogoAbertura'
+import Mensagens from './screens/Mensagens'
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Registra" component={Registra} options={{headerShown: false}}/>
         <Stack.Screen name="Menu"     component={Menu} options={{headerShown: false}}/>
+        <Stack.Screen name="Mensagens"     component={Mensagens} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
 
     tela:{
+        marginTop: 35,
         flex: 1,
         alignItems: 'center',
 
@@ -91,34 +92,36 @@ export default StyleSheet.create({
     },
 
     cabecalhoH:{
+        flexDirection: 'row',
         width: '100%',
         height: '15%',
-        marginTop: 25,
-        borderColor: 'grey',
+        borderColor: 'blue',
+        justifyContent: 'flex-end'
         
     },
 
     buscarH:{
-        flexDirection: 'row',
         borderWidth: 1,
         width: '50%',
         borderRadius: 20,
         borderColor: 'grey',
-        margin: 'auto',
         height: 35,
+        marginHorizontal: 'auto',
+        
+        
 
     },
 
-    buscarH2:{
-        flexDirection: 'row',
-        borderWidth: 1,
-        width: '50%',
-        borderRadius: 5,
-        borderColor: 'grey',
-        margin: 'auto',
-        height: 35,
+    // buscarH2:{
+    //     flexDirection: 'row',
+    //     borderWidth: 1,
+    //     width: '50%',
+    //     borderRadius: 5,
+    //     borderColor: 'grey',
+    //     margin: 'auto',
+    //     height: 35,
 
-    },
+    // },
     logoAbertura:{
 
         width: 300,
@@ -133,6 +136,25 @@ export default StyleSheet.create({
         height: 200,
         marginTop: 50,
         marginBottom: 50
+    },
+
+    msg: {
+        fontSize: 30,
+        color: 'grey',
+        width: 45,
+        
+        
+    },
+
+    mensagens: {
+        width: '100%'
+    },
+    voltar: {
+        fontSize: 30,
+        color: 'grey',
+        width: 45,
+        
+        
     }
 
 });
