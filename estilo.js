@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 
 export default StyleSheet.create({
 
@@ -91,37 +92,110 @@ export default StyleSheet.create({
         backgroundColor: 'black'
     },
 
+        // ------------ HOME.TSX ----------------
+
     cabecalhoH:{
         flexDirection: 'row',
         width: '100%',
-        height: '15%',
-        borderColor: 'blue',
-        justifyContent: 'flex-end'
         
+    },
+
+    cabBusc:{
+        marginHorizontal: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '80%'
     },
 
     buscarH:{
         borderWidth: 1,
-        width: '50%',
+        width: '70%',
         borderRadius: 20,
         borderColor: 'grey',
         height: 35,
-        marginHorizontal: 'auto',
         
         
 
     },
 
-    // buscarH2:{
-    //     flexDirection: 'row',
-    //     borderWidth: 1,
-    //     width: '50%',
-    //     borderRadius: 5,
-    //     borderColor: 'grey',
-    //     margin: 'auto',
-    //     height: 35,
+    cabEsq:{
+        width: '10%'
+    },
 
-    // },
+    cabDir:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: '10%'
+    },
+
+    msg: {
+        fontSize: 30,
+        color: 'grey',
+        
+        
+    },
+
+    lupaH:{
+        fontSize: 30,
+        color: 'grey',
+      
+    },
+
+    botoesBarra:{
+        flexDirection: 'row',
+        marginTop: 40
+    },
+
+    botaoOfert:{
+        width: '50%',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: 35,
+        borderColor: 'grey'
+    },
+
+    botaoProp:{
+        width: '50%',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: 35,
+        borderColor: 'grey'
+    },
+
+    botaofoco:{
+        width: '50%',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: 35,
+        borderColor: '#9ac5d8',
+        backgroundColor: '#9ac5d8'
+    },
+
+
+    textBotao:{
+        textAlign: 'center',
+        margin: 'auto',
+        fontSize: 20,
+        color: 'grey',
+        fontWeight: 'bold'
+    },
+    textFoco:{
+        textAlign: 'center',
+        margin: 'auto',
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold'
+    },
+
+    flatList:{
+        backgroundColor: 'red',
+        width: 100,
+    },
+
+
+         //----------------------------------------------
+
+   
     logoAbertura:{
 
         width: 300,
@@ -138,7 +212,13 @@ export default StyleSheet.create({
         marginBottom: 50
     },
 
-    msg: {
+
+    mensagens: {
+        width: '100%'
+    },
+
+   
+    voltar: {
         fontSize: 30,
         color: 'grey',
         width: 45,
@@ -146,15 +226,15 @@ export default StyleSheet.create({
         
     },
 
-    mensagens: {
-        width: '100%'
-    },
-    voltar: {
-        fontSize: 30,
-        color: 'grey',
-        width: 45,
-        
-        
-    }
+     // buscarH2:{
+    //     flexDirection: 'row',
+    //     borderWidth: 1,
+    //     width: '50%',
+    //     borderRadius: 5,
+    //     borderColor: 'grey',
+    //     margin: 'auto',
+    //     height: 35,
+
+    // },
 
 });
