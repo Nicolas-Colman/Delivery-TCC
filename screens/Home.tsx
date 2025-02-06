@@ -26,11 +26,7 @@ const Home = () => {
     const renderContent = () => {
         if (selectedTab === 'Proposta') {
             return (
-                <FlatList
-                    style={estilo.flatList}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                />
+                <Proposta/>
             );
         }
         if (selectedTab === 'Oferta') {
