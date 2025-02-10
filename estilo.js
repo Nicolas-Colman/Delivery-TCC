@@ -4,7 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 export default StyleSheet.create({
 
     tela:{
-        marginTop: 35,
+        marginTop: 45,
         flex: 1,
         alignItems: 'center',
 

@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import estilo from "../estilo";
 import Proposta from "./Proposta";
+import Oferta from "./Proposta";
 
 
 
@@ -31,7 +32,7 @@ const Home = () => {
         }
         if (selectedTab === 'Oferta') {
             return (
-                <Text>Aqui estão os detalhes!</Text>
+                <Oferta/>
             );
         }
     };
