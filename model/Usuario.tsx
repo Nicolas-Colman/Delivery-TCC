@@ -5,6 +5,7 @@ export class Usuario {
     public email   : string;
     public senha   : string;
     public dataNasc: string;
+    public urlFoto : string;
 
     constructor(obj?: Partial<Usuario>){
         if(obj){
@@ -14,6 +15,7 @@ export class Usuario {
             this.email   = obj.email
             this.senha   = obj.senha
             this.dataNasc= obj.dataNasc
+            this.urlFoto = obj.urlFoto
         }
     }
 
@@ -25,6 +27,7 @@ export class Usuario {
             "email"   : "${this.email}",
             "senha"   : "${this.senha}",
             "nadaNasc": "${this.dataNasc}",
+            "urlFoto" : "${this.urlFoto}",
         }`
         return objeto
     }
@@ -37,6 +40,7 @@ export class Usuario {
                 email   : this.email,
                 senha   : this.senha,
                 dataNasc: this.dataNasc,
+                urlFoto : this.urlFoto,
             }
 
             return usuario

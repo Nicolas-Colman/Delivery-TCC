@@ -10,13 +10,18 @@ const Publicar = () =>{
     const [formPublic, setFormPublic] = useState<Partial<Publicacao>>({});
     const [publicacao, setPublicacao] = useState<Publicacao[]>([]);
     
-    const refPublic = firestore.collection("Usuario")
-        .doc(auth.currentUser?.uid)
-        .collection("Publicacao")
+    const refPublic = firestore.collection("Publicacao")
 
     const salvar = async() => {
         const publicacao = new Publicacao(formPublic)
+        
 
+        const refUsuario = firestore.collection("Usuario").doc(auth.currentUser?.uid);
+        const usuarioDoc = await refUsuario.get();
+        const usuarioData = usuarioDoc.data();
+        publicacao.urlFoto = usuarioData?.urlfoto;
+        publicacao.userId = auth.currentUser?.uid
+        
         if (publicacao.id === undefined){
             const refIdPublic = refPublic.doc();
             publicacao.id = refIdPublic.id;
@@ -53,6 +58,12 @@ const Publicar = () =>{
                         placeholder="Descrição"
                         value={formPublic.descricao}
                         onChangeText={texto => setFormPublic({...formPublic, descricao: texto})}
+                        style={estilo.input}
+                        />
+                    <TextInput 
+                        placeholder="Valor"
+                        value={formPublic.valor}
+                        onChangeText={texto => setFormPublic({...formPublic, valor: texto})}
                         style={estilo.input}
                         />
                     

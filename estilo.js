@@ -112,7 +112,7 @@ export default StyleSheet.create({
         width: '70%',
         borderRadius: 20,
         borderColor: 'grey',
-        height: 35,
+        height: 40,
         
         
 
@@ -129,14 +129,14 @@ export default StyleSheet.create({
     },
 
     msg: {
-        fontSize: 30,
+        fontSize: 40,
         color: 'grey',
         
         
     },
 
     lupaH:{
-        fontSize: 30,
+        fontSize: 40,
         color: 'grey',
       
     },

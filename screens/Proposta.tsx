@@ -11,9 +11,9 @@ const Proposta = () => {
     const [atualizar, setAtualizar] = useState(true);
     const [publicacao, setPublicacao] = useState<Publicacao[]>([]);
 
-    const refPublicacao = firestore.collection("Usuario")
-        .doc(auth.currentUser?.uid)
-        .collection("Publicacao")
+    const refPublicacao = firestore.collection("Publicacao")
+    const refUsuario = firestore.collection("Usuario")
+            .doc(auth.currentUser?.uid)
 
     useEffect(() => {
         if (loading) {
@@ -51,6 +51,8 @@ const Proposta = () => {
     const Item = ({ item }) => (
         <View>
             <Text>Descrição: {item.descricao}</Text>
+            <Text>Usuario {item.userId}</Text>
+            <Text>valor {item.valor}</Text>
         </View>
     )
 
