@@ -4,6 +4,7 @@ export class Usuario {
     public cpf     : string;
     public email   : string;
     public senha   : string;
+    public repSenha   : string;
     public dataNasc: string;
     public urlFoto : string;
 
@@ -14,6 +15,7 @@ export class Usuario {
             this.cpf     = obj.cpf
             this.email   = obj.email
             this.senha   = obj.senha
+            this.repSenha   = obj.repSenha
             this.dataNasc= obj.dataNasc
             this.urlFoto = obj.urlFoto
         }
@@ -26,6 +28,7 @@ export class Usuario {
             "cpf"     : "${this.cpf}",
             "email"   : "${this.email}",
             "senha"   : "${this.senha}",
+            "repSenha"   : "${this.repSenha}",
             "nadaNasc": "${this.dataNasc}",
             "urlFoto" : "${this.urlFoto}",
         }`
@@ -39,6 +42,7 @@ export class Usuario {
                 cpf     : this.cpf,
                 email   : this.email,
                 senha   : this.senha,
+                repSenha   : this.repSenha,
                 dataNasc: this.dataNasc,
                 urlFoto : this.urlFoto,
             }

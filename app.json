@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "delivery",
     "slug": "delivery",
     "version": "1.0.0",

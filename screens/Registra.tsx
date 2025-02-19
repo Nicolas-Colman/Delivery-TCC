@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { auth, firestore } from "../firebase";
-import {KeyboardAvoidingView, ScrollView, TouchableOpacity, Text, View, TextInput, Image, Platform,} from "react-native";
+import React, { useEffect, useState } from "react";
+import { auth, firestore, storage } from "../firebase";
+import { KeyboardAvoidingView, ScrollView, TouchableOpacity, Text, View, TextInput, Alert, Image, Pressable, Platform, } from "react-native";
 import estilo from "../estilo";
 import { Usuario } from "../model/Usuario";
+import * as ImagePicker from "expo-image-picker";
+import { uploadBytes } from "firebase/storage"; //Envia arq para o storage
 
 const Registra = () => {
     const [formUsuario, setFormUsuario] = useState<Partial<Usuario>>({});
@@ -11,24 +13,7 @@ const Registra = () => {
 
     const refUsuario = firestore.collection("Usuario");
 
-    const Registro = () => {
-        auth
-            .createUserWithEmailAndPassword(formUsuario.email!, formUsuario.senha!)
-            .then((userCredentials) => {
-                const user = userCredentials.user;
-                const refComIdUsuario = refUsuario.doc(auth.currentUser?.uid!);
-                refComIdUsuario.set({
-                    id: auth.currentUser?.uid,
-                    nome: formUsuario.nome,
-                    email: formUsuario.email,
-                    cpf: formUsuario.cpf,
-                    dataNasc: formUsuario.dataNasc,
-                });
-                console.log("registrado como ", user?.email);
-                navigation.replace("Menu");
-            })
-            .catch((error) => alert(error.message));
-    };
+    const [imagePath, setImagePath] = useState('');
 
     const Login = () => {
         navigation.replace("Login");
@@ -37,6 +22,112 @@ const Registra = () => {
     const Limpar = () => {
         setFormUsuario({});
     };
+
+
+
+
+    const escolheFoto = () => {
+        Alert.alert(
+            "Selecionar Foto",
+            "Escolha uma alternativa",
+            [
+                {
+                    text: "Câmera",
+                    onPress: () => abrirCamera()
+                },
+                {
+                    text: "Abrir Galeria",
+                    onPress: () => abrirGaleria()
+                }
+            ]
+        );
+    }
+
+    const abrirCamera = async () => {
+        const permissao = await ImagePicker.requestCameraPermissionsAsync();
+        if (permissao.granted === false) {
+            alert("Você recusou a permissão de acesso à câmera.")
+            return;
+        }
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: 'images',
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+        });
+        console.log(result.assets[0]);
+        enviarImagem(result);
+    }
+
+    const abrirGaleria = async () => {
+        const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissao.granted === false) {
+            alert("Você recusou a permissão de acesso à galeria.")
+            return;
+        }
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: "images",
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+        console.log(result);
+        enviarImagem(result);
+    }
+
+    const enviarImagem = async (result) => {
+        if (!result.canceled) {
+            setImagePath(result.assets[0].uri);
+            let filename = result.assets[0].fileName;
+            const ref = storage.ref(`imagens/${filename}`);
+
+            const img = await fetch(result.assets[0].uri);
+            const bytes = await img.blob();
+            const fbResult = await uploadBytes(ref, bytes);
+
+            const urlDownload = await storage.ref(
+                fbResult.metadata.fullPath).getDownloadURL()
+
+            console.log("URL da foto:", urlDownload); // Debugging
+            setFormUsuario({ ...formUsuario, urlFoto: urlDownload });
+
+        } else {
+            alert("Envio cancelado!");
+        }
+    }
+
+    const Registro = () => {
+        if (!erroSenha) {
+            auth
+                .createUserWithEmailAndPassword(formUsuario.email!, formUsuario.senha!)
+                .then((userCredentials) => {
+                    const user = userCredentials.user;
+                    const refComIdUsuario = refUsuario.doc(auth.currentUser?.uid!);
+                    refComIdUsuario.set({
+                        id: auth.currentUser?.uid,
+                        nome: formUsuario.nome,
+                        email: formUsuario.email,
+                        cpf: formUsuario.cpf,
+                        dataNasc: formUsuario.dataNasc,
+                        urlFoto: formUsuario.urlFoto
+                    });
+                    console.log("registrado como ", user?.email);
+                    navigation.replace("Menu");
+                })
+                .catch((error) => alert(error.message));
+        }
+    };
+
+    const [erroSenha, setErroSenha] = useState("");
+
+    useEffect(() => {
+        if (formUsuario.senha !== formUsuario.repSenha) {
+            setErroSenha("As senhas não coincidem");
+        } else {
+            setErroSenha("");
+        }
+    }, [formUsuario.senha, formUsuario.repSenha]);
+
 
     return (
         <KeyboardAvoidingView
@@ -48,15 +139,26 @@ const Registra = () => {
                     flexGrow: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                  }}
-                  keyboardShouldPersistTaps="handled"
-                  showsVerticalScrollIndicator={false}
-                  showsHorizontalScrollIndicator={false}
+                }}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             >
-                <View>
-                    <Image source={require("../assets/Logo.png")} style={estilo.logo} />
-                </View>
 
+                <Pressable onPress={() => escolheFoto()}>
+                    <View style={estilo.imagemView}>
+                        {
+                            imagePath !== "" && (
+                                <Image source={{ uri: imagePath }} style={estilo.imagemPerfil} />
+                            )
+                        }
+                        {
+                            imagePath === "" && (
+                                <Image source={require("../assets/camera.png")} style={estilo.imagemPerfil} />
+                            )
+                        }
+                    </View>
+                </Pressable>
                 <View style={estilo.inputArea}>
                     <TextInput
                         style={estilo.input}
@@ -86,11 +188,22 @@ const Registra = () => {
                         style={estilo.input}
                         placeholder="Senha"
                         value={formUsuario.senha}
-                        onChangeText={(texto) =>
-                            setFormUsuario({ ...formUsuario, senha: texto })
-                        }
+                        onChangeText={(texto) => {
+                            setFormUsuario({ ...formUsuario, senha: texto });
+
+                        }}
                         secureTextEntry
                     />
+                    <TextInput
+                        style={estilo.input}
+                        placeholder="Repetir Senha"
+                        value={formUsuario.repSenha}
+                        onChangeText={(texto) => {
+                            setFormUsuario({ ...formUsuario, repSenha: texto })
+                        }}
+                        secureTextEntry
+                    />
+                    {erroSenha ? <Text style={{ color: "red" }}>{erroSenha}</Text> : null}
                     <TextInput
                         style={estilo.input}
                         placeholder="Nascimento"

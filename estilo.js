@@ -135,6 +135,16 @@ export default StyleSheet.create({
         
     },
 
+    imagemPerfil: {
+        width: 150,
+        height: 150,
+        borderRadius: 150/2,
+    },
+    imagemView:{
+        alignContent: "center",
+        alignItems: "center"
+    },
+
     lupaH:{
         fontSize: 40,
         color: 'grey',
