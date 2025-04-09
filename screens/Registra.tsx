@@ -88,7 +88,7 @@ const Registra = () => {
             const urlDownload = await storage.ref(
                 fbResult.metadata.fullPath).getDownloadURL()
 
-            console.log("URL da foto:", urlDownload); // Debugging
+            console.log("URL da foto:", urlDownload); 
             setFormUsuario({ ...formUsuario, urlFoto: urlDownload });
 
         } else {
@@ -116,6 +116,9 @@ const Registra = () => {
                 })
                 .catch((error) => alert(error.message));
         }
+        else if(erroSenha) {
+            alert("Nem todos os campos estão corretamente preenchidos!")
+        }
     };
 
     const [erroSenha, setErroSenha] = useState("");
@@ -123,7 +126,8 @@ const Registra = () => {
     useEffect(() => {
         if (formUsuario.senha !== formUsuario.repSenha) {
             setErroSenha("As senhas não coincidem");
-        } else {
+        }
+        else {
             setErroSenha("");
         }
     }, [formUsuario.senha, formUsuario.repSenha]);

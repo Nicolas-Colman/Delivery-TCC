@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import { auth, firestore } from '../firebase';
-import { KeyboardAvoidingView, View, TextInput, Text, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
+import { KeyboardAvoidingView, View, TextInput, Text, TouchableOpacity, ActivityIndicator, FlatList, Image, Pressable } from "react-native";
 import estilo from "../estilo";
 import { Publicacao } from "../model/Publicacao"
 
@@ -13,7 +13,7 @@ const Proposta = () => {
 
     const refPublicacao = firestore.collection("Publicacao")
     const refUsuario = firestore.collection("Usuario")
-            .doc(auth.currentUser?.uid)
+        .doc(auth.currentUser?.uid)
 
     useEffect(() => {
         if (loading) {
@@ -49,10 +49,26 @@ const Proposta = () => {
 
     const renderItem = ({ item }) => <Item item={item} />
     const Item = ({ item }) => (
-        <View>
-            <Text>Descrição: {item.descricao}</Text>
-            <Text>Usuario {item.userId}</Text>
-            <Text>valor {item.valor}</Text>
+
+
+        <View style={estilo.propDesc}>
+
+            <View style={estilo.propDescImagem}>
+                <Image source={{ uri: item.urlFoto }} style={estilo.propDescImg} />
+            </View>
+            <View style={estilo.propDescText}>
+                <Text style={estilo.textPropDescText}>{item.userId}</Text>
+                <Text style={estilo.textPropDescText}>          {item.descricao}</Text>
+                <Text style={estilo.textPropDescText}>Valor de Serviço: R${item.valor}</Text>
+            </View>
+
+            <View>
+                <TouchableOpacity
+                    style={estilo.botao}>
+                    <Text style={estilo.botaoTexto}>Aceitar</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 

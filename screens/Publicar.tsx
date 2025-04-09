@@ -1,93 +1,91 @@
 import { useNavigation } from "@react-navigation/native";
-import * as React from 'react';
-import { useState } from "react";
-import { auth, firestore, storage } from '../firebase';
-import { KeyboardAvoidingView, View, TextInput, Text, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, View, TextInput, Text, TouchableOpacity, Alert } from "react-native";
+import { auth, firestore } from '../firebase';
 import estilo from "../estilo";
-import {Publicacao} from "../model/Publicacao";
+import { Publicacao } from "../model/Publicacao";
 
-const Publicar = () =>{
+const Publicar = () => {
     const [formPublic, setFormPublic] = useState<Partial<Publicacao>>({});
-    const [publicacao, setPublicacao] = useState<Publicacao[]>([]);
-    
-    const refPublic = firestore.collection("Publicacao")
+    const refPublic = firestore.collection("Publicacao");
 
-    const salvar = async() => {
-        const publicacao = new Publicacao(formPublic)
-        
+    const salvar = async () => {
+        try {
+            const publicacao = new Publicacao(formPublic);
+            const currentUser = auth.currentUser;
 
-        const refUsuario = firestore.collection("Usuario").doc(auth.currentUser?.uid);
-        const usuarioDoc = await refUsuario.get();
-        const usuarioData = usuarioDoc.data();
-        publicacao.urlFoto = usuarioData?.urlfoto;
-        publicacao.userId = auth.currentUser?.uid
-        
-        if (publicacao.id === undefined){
-            const refIdPublic = refPublic.doc();
+            const refUsuario = firestore.collection("Usuario").doc(currentUser.uid);
+            const usuarioDoc = await refUsuario.get();
+
+            if (!usuarioDoc.exists) {
+                Alert.alert("Erro", "Dados do usuário não encontrados.");
+                return;
+            }
+
+            const usuarioData = usuarioDoc.data() as { urlFoto?: string };
+            publicacao.urlFoto = usuarioData.urlFoto || "";
+            publicacao.userId = currentUser.uid;
+
+            const refIdPublic = publicacao.id
+                ? refPublic.doc(publicacao.id)
+                : refPublic.doc();
+
             publicacao.id = refIdPublic.id;
 
-            refIdPublic.set(publicacao.toFirestore())
-            .then(() =>{
-                alert("publicação criada com sucesso");
-                Limpar();
-            
-            })
-        }else {
-            const refIdPublic = refPublic.doc(publicacao.id);
+            if (formPublic.id) {
+                await refIdPublic.update(publicacao.toFirestore());
+                Alert.alert("Sucesso", "Publicação atualizada com sucesso!");
+            } else {
+                await refIdPublic.set(publicacao.toFirestore());
+                Alert.alert("Sucesso", "Publicação criada com sucesso!");
+            }
 
-            refIdPublic.update(publicacao.toFirestore())
-            .then(() => {
-                alert(publicacao.descricao + " atualizado com sucesso!");
-                Limpar();
-            })
+            limpar();
+        } catch (error) {
+            console.error("Erro ao salvar publicação:", error);
+            Alert.alert("Erro", "Não foi possível salvar a publicação.");
         }
+    };
 
-        
-    }
-
-    const Limpar = () => {
-        setFormPublic({})
-    }
-
+    const limpar = () => {
+        setFormPublic({});
+    };
 
     return (
         <KeyboardAvoidingView style={estilo.tela}>
             <View>
-                <View>
-                    <TextInput 
-                        placeholder="Descrição"
-                        value={formPublic.descricao}
-                        onChangeText={texto => setFormPublic({...formPublic, descricao: texto})}
-                        style={estilo.input}
-                        />
-                    <TextInput 
-                        placeholder="Valor"
-                        value={formPublic.valor}
-                        onChangeText={texto => setFormPublic({...formPublic, valor: texto})}
-                        style={estilo.input}
-                        />
-                    
-                    
-                </View>
+                <TextInput
+                    placeholder="Descrição"
+                    value={formPublic.descricao}
+                    onChangeText={texto => setFormPublic({ ...formPublic, descricao: texto })}
+                    style={estilo.input}
+                />
+                <TextInput
+                    placeholder="Valor"
+                    value={formPublic.valor}
+                    onChangeText={texto => setFormPublic({ ...formPublic, valor: texto })}
+                    style={estilo.input}
+                    keyboardType="numeric"
+                />
+
                 <View style={estilo.buttonArea}>
-                <TouchableOpacity 
-                    style={estilo.botao}
-                    onPress={salvar}
-                >
-                    <Text style={estilo.botaoTexto}>Salvar</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={estilo.botao}
+                        onPress={salvar}
+                    >
+                        <Text style={estilo.botaoTexto}>Salvar</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={estilo.botaoBranco}
-                    onPress={Limpar}
-                >
-                    <Text style={estilo.botaoBrancoTexto}>Limpar</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={estilo.botaoBranco}
+                        onPress={limpar}
+                    >
+                        <Text style={estilo.botaoBrancoTexto}>Limpar</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            </View>
-            
         </KeyboardAvoidingView>
-    )
-}
+    );
+};
 
-export default Publicar
+export default Publicar;

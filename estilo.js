@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 
 export default StyleSheet.create({
 
@@ -56,7 +55,53 @@ export default StyleSheet.create({
         color: 'white',
         marginTop: 10,
         borderColor: '#9ac5d8',
-        borderWidth: 2
+        borderWidth: 2,
+        backgroundColor: 'white'
+    },
+    propDesc:{
+        width: '95%',
+        borderColor: '#9ac5d8',
+        backgroundColor:'#faf7f7',
+        borderWidth: 2,
+        borderRadius: 20,
+        padding: 5,
+        marginTop:70
+    },
+
+    propDescImg:{
+        width: 105, 
+        height: 105, 
+        borderRadius: 100,
+        borderColor: '#faf7f7',
+        borderWidth: 5,
+        margin: 'auto' 
+    },
+    propDescImagem:{
+        width: 110,
+        height: 60,
+        marginBottom: 50,
+        alignSelf: 'center',
+        borderColor: '#9ac5d8',
+        position: 'absolute', 
+        top: -60, 
+        borderTopWidth:2,
+        borderRightWidth: 2,
+        borderLeftWidth: 2,
+        borderTopRightRadius: 100,
+        borderTopLeftRadius: 100
+    },
+    propDescText:{
+        marginTop:50,
+    },
+    textPropDescText:{
+        marginBottom:5,
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+        backgroundColor: '#9ac5d8',
+        borderRadius: 20,
+        padding:5
+
     },
 
     botaoBrancoTexto:{
@@ -119,7 +164,8 @@ export default StyleSheet.create({
     },
 
     cabEsq:{
-        width: '10%'
+        width: '10%',
+        
     },
 
     cabDir:{
@@ -197,10 +243,7 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    flatList:{
-        backgroundColor: 'red',
-        width: 100,
-    },
+
 
 
          //----------------------------------------------
