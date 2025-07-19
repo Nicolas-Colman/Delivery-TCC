@@ -19,7 +19,7 @@ A proposta é oferecer uma experiência acessível, com baixas taxas, diversidad
 
     Pagamento digital seguro (futuro)
 
-🚀 Tecnologias Utilizadas
+🚀 Tecnologias e métodos Utilizadas
 
     React Native – Para o desenvolvimento do app mobile
 
